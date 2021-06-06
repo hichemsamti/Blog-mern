@@ -1,4 +1,5 @@
 import TopBar from "./topbar/TopBar"
+import Home from "./pages/home/Home"
 
 function App() {
   return (
@@ -6,7 +7,7 @@ function App() {
     <>
    <TopBar/>
 
-   <p>test</p>
+   <Home/>
 
     
     </>
