@@ -1,6 +1,7 @@
 const router =require("express").Router()
 const User = require("../models/User")
 const bcrypt = require ("bcrypt")
+const Post = require("../models/Post")
 
 //update 
 
@@ -22,7 +23,7 @@ router.put("/:id",async(req,res)=>{
 
        const updatedUser = await User.findByIdAndUpdate(req.params.id,{
            $set: req.body
-       })
+       },{new:true})
 
        res.status(200).json(updatedUser)
 
@@ -36,3 +37,62 @@ router.put("/:id",async(req,res)=>{
     }
 
 })
+
+//delete
+
+router.delete("/:id", async(req,res) => {
+
+    if(req.body.userId === req.params.id){
+
+        try{
+
+
+           const user = await User.findById(req.params.id)
+       
+
+
+    
+
+                         try{
+
+                            await Post.deleteMany({username: user.username})
+
+                            await User.findByIdAndDelete(req.params.id)
+
+                             res.status(200).json("user deleted")
+
+                           }catch(err){
+
+                           res.status(500).json(err)
+                        }
+    }catch (err){
+
+        res.status(404).json("user not found")
+    }
+
+    }else{
+        res.statut(401).json("you can only delete your account ! ")
+    }
+
+
+})
+
+
+// get user
+
+router.get("/:id",async(req,res)=>{
+
+    try{
+
+         const user =await User.findById(req.params.id)
+         const {password, ...others} = user._doc;
+         res.status(200).json(others)
+
+    }catch(err){
+
+         res.status(500).json(err)
+
+    }
+})
+
+module.exports = router
