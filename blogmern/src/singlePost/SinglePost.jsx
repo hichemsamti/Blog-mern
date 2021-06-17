@@ -1,14 +1,39 @@
 import React from 'react'
 import "./singlePost.css"
+import {useLocation} from "react-router"
+import {useEffect,useState} from "react"
+import axios from "axios"
 
 export default function SinglePost() {
+    const location = useLocation()
+    const path=location.pathname.split("/")[2]
+    const [post,setPost] = useState({})
+
+
+
+    useEffect(()=>{
+
+        const getPost =  async ()=>{
+
+            const res = await axios.get("http://localhost:5000/api/posts/"+ path)
+            console.log(res)
+            setPost(res.data)
+
+        }
+
+        getPost()
+
+
+    },[path])
     return (
         <div className="singlePost">
           
           <div className="singlePostWrapper">
-              <img src="https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/13495320_1755298361375799_7760079432494091933_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=UtI4fWX3wQQAX_BEGR8&_nc_ht=scontent.ftun1-2.fna&oh=65ae4786a2da1331a058ace5d37260ba&oe=60DF4790" alt="" className="singlePostImg"/>
+
+              {post.photo && (<img src={post.photo}  alt="" className="singlePostImg"/>)}
               
-              <h1 className="singlePostTitle">hiiiiiiiiiiiii
+              
+              <h1 className="singlePostTitle"> {post.title}
               
               <div className="singlePostEdit">
 
@@ -22,12 +47,12 @@ export default function SinglePost() {
 
               <div className="singlePostInfo">
 
-                 <span className="singlePostAuthor">Author: <b>Hichem</b></span>
-                 <span className="singlePostDate">1 hour ago </span>
+                 <span className="singlePostAuthor">Author: <b>{post.username}</b></span>
+                 <span className="singlePostDate">{new Date(post.createdAt).toDateString()} </span>
 
               </div>
 
-              <p className="singlePostDesc" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis unde quibusdam perferendis dolorem, facere corporis quos a asperiores voluptate iure sequi aperiam et consequuntur dolor consecte Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ullam aspernatur voluptates impedit eos? Aliquam, impedit praesentium exercitationem iure, corporis aut placeat totam ullam inventore illum velit enim culpa consequuntur.</p>
+              <p className="singlePostDesc" >{post.desc}</p>
 
 
           </div>
