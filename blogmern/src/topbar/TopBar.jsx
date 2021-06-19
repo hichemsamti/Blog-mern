@@ -1,9 +1,18 @@
 import React from 'react'
 import "./topbar.css"
 import {Link} from "react-router-dom"
+import { useContext } from 'react'
+import { Context } from '../context/Context'
 
 export default function TopBar() {
-    const user = false;
+    const {user,dispatch} = useContext(Context)
+
+    const handleLogout = () =>{
+
+        dispatch({type:"LOGOUT"})
+
+
+    }
     return (
         <div className="top">
             <div className="topLeft"><i class="topIcon fab fa-facebook-square"></i>
@@ -23,7 +32,7 @@ export default function TopBar() {
                      <Link className="link" to="/"> CONTACT </Link> </li>
                  <li className="topListItem">
                      <Link className="link" to="/write"> WRITE</Link> </li>
-                 <li className="topListItem">
+                 <li className="topListItem" onClick={handleLogout}>
                      {user && "LOGOUT"}
                     </li>
 
@@ -37,7 +46,7 @@ export default function TopBar() {
 
                 {
                     
-                    user ? ( <img className="topImg" src="https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/13495320_1755298361375799_7760079432494091933_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=UtI4fWX3wQQAX_BEGR8&_nc_ht=scontent.ftun1-2.fna&oh=65ae4786a2da1331a058ace5d37260ba&oe=60DF4790" alt=""></img>)
+                    user ? ( <img className="topImg" src={user.profilePic} alt=""></img>)
                     : (
                      <ul className="topList"> 
                       <li className="topListItem">

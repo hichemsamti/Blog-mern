@@ -15,3 +15,9 @@ export const LoginFailure = ()=>({
 
     type:"LOGIN_FAILURE"
 })
+
+
+export const LoginFailure = ()=>({
+
+    type:"LOGOUT"
+})
