@@ -23,7 +23,7 @@ export default function Write() {
        }
        if(file){
 
-          const data = FormData()
+          const data = new FormData()
           const filename= Date.now() + file.name
           
           data.append("name", filename)
@@ -61,19 +61,20 @@ export default function Write() {
 
     return (
         <div className="write">
-            <img className="writeImg" src="https://scontent.ftun1-2.fna.fbcdn.net/v/t1.18169-9/13495320_1755298361375799_7760079432494091933_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=UtI4fWX3wQQAX_BEGR8&_nc_ht=scontent.ftun1-2.fna&oh=65ae4786a2da1331a058ace5d37260ba&oe=60DF4790" alt=""/>
+            {file && ( <img className="writeImg" src={URL.createObjectURL(file)}  alt=""/>)}
+           
           <form className="writeForm" onSubmit={handleSubmit}>
  
               <div className="writeFormGroup">
                  <label htmlFor='fileInput'>
                  <i className="writeIcon far fa-plus-square"></i>
                  </label>
-                 <input type="file" id="fileInput" style={{display:"none"}}/>
-                 <input type="text" placeholder="Title" className="writeInput" autoFocus={true} />
+                 <input type="file" id="fileInput" style={{display:"none"}} onChange={e=>setFile(e.target.files[0])}/>
+                 <input type="text" placeholder="Title" className="writeInput" autoFocus={true}  onChange={e=>setTitle(e.target.value)}/>
 
               </div>
               <div className="writeFormGroup">
-                  <textarea  placeholder="Tell your story" type="text" className="writeInput writeText"></textarea>
+                  <textarea  placeholder="Tell your story" type="text" className="writeInput writeText" onChange={e=>setDesc(e.target.value)} ></textarea>
 
 
               </div>
