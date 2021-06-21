@@ -57,8 +57,8 @@ export default function SinglePost() {
 
         try{
 
-           await axios.put('http://localhost:5000/api/posts'+ post._id,{data:{username:user.username,title,desc}})
-            window.location.reload()
+           await axios.put('http://localhost:5000/api/posts/'+ post._id,{username:user.username,title,desc})
+            setUpdateMode(false)
         }catch(err){
             console.log(err)
         }
@@ -73,7 +73,7 @@ export default function SinglePost() {
 
               {post.photo && (<img src={PF+post.photo}  alt="" className="singlePostImg"/>)}
               
-              {updateMode ? <input type="text" value={title} className='singlePostTitleInput' autoFocus  onChange={e=>setTitle(e.target.value)}  /> : (<h1 className="singlePostTitle"> {post.title}
+              {updateMode ? <input type="text" value={title} className='singlePostTitleInput' autoFocus  onChange={e=>setTitle(e.target.value)}  /> : (<h1 className="singlePostTitle"> {title}
 
                      {post.username === user?.username && ( <div className="singlePostEdit">
 
@@ -105,9 +105,11 @@ export default function SinglePost() {
                  <span className="singlePostDate">{new Date(post.createdAt).toDateString()} </span>
 
               </div>
-              {updateMode ? <textarea className="singlePostDescInput" value={desc} onChange={e=>setDesc(e.target.value)} /> :( <p className="singlePostDesc" >{post.desc}</p>) }
+              {updateMode ? <textarea className="singlePostDescInput" value={desc} onChange={e=>setDesc(e.target.value)} /> :( <p className="singlePostDesc" >{desc}</p>) }
               
-             <button className="singlePostButton" onClick={handleUpdate}>Update</button>
+
+              {updateMode && (<button className="singlePostButton" onClick={handleUpdate}>Update</button>)}
+             
 
           </div>
         </div>

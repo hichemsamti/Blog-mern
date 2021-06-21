@@ -21,3 +21,20 @@ export const LoginFailure = ()=>({
 
     type:"LOGOUT"
 })
+
+
+export const UpdateStart =(userCredentials) =>({
+
+    type:"UPDATE_START"
+})
+
+
+export const UpdateSuccess = (user)=>({
+    type:"UPDATE_SUCCSESS",
+    payload:user
+})
+
+
+export const UpdateFailure = ()=>({
+    type:"UPDATE_FAILURE"
+})
